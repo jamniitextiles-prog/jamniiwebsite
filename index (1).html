@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jamnii Official — Luxury Pakistani Wear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="products.js"></script>
+<style>
+:root{--gold:#C9A96E;--dark:#1a1410;--cream:#FAF7F2;--text:#2C2418;--muted:#8B7355;--border:rgba(201,169,110,0.2)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(250,247,242,0.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;letter-spacing:.15em;color:var(--dark);text-decoration:none}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--gold)}
+.cart-btn{background:var(--gold);color:white;border:none;cursor:pointer;padding:8px 16px;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.cart-count{background:var(--dark);color:white;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.65rem}
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 2rem 4rem;position:relative;overflow:hidden}
+.hero-img{position:absolute;right:0;top:0;bottom:0;width:48%;overflow:hidden}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.hero-content{max-width:540px;position:relative;z-index:1}
+.hero-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;gap:10px}
+.hero-tag::before{content:'';width:30px;height:1px;background:var(--gold)}
+h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,5.5rem);font-weight:300;line-height:1.05;color:var(--dark);margin-bottom:1.5rem}
+h1 em{font-style:italic;color:var(--gold)}
+.hero p{font-size:.95rem;line-height:1.8;color:var(--muted);margin-bottom:2.5rem;max-width:420px}
+.btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-dark{background:var(--dark);color:var(--cream);padding:14px 32px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase}
+.btn-dark:hover{background:var(--gold)}
+.btn-out{background:transparent;color:var(--dark);padding:14px 32px;border:1px solid var(--border);cursor:pointer;font-family:'Jost',sans-serif;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;display:inline-block}
+.btn-out:hover{border-color:var(--gold);color:var(--gold)}
+.stats{display:flex;gap:3rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border)}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--dark);display:block}
+.stat-lbl{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sec-head{text-align:center;margin-bottom:3rem}
+.sec-tag{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.75rem;display:block}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--dark)}
+.sec-title em{font-style:italic}
+.filters-wrap{padding:2rem 2rem 1rem}
+.search-wrap{display:flex;justify-content:center;margin-bottom:1rem}
+.search-wrap input{width:100%;max-width:400px;padding:10px 16px;border:1px solid var(--border);background:white;font-family:'Jost',sans-serif;font-size:.85rem;color:var(--text);outline:none}
+.search-wrap input:focus{border-color:var(--gold)}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center}
+.fbtn{padding:8px 20px;border:1px solid var(--border);background:transparent;cursor:pointer;font-family:'Jost',sans-serif;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.fbtn:hover,.fbtn.active{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.products-sec{padding:2rem 2rem 5rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.pcard{background:white;cursor:pointer;transition:transform .3s,box-shadow .3s;position:relative}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
+.pimg{position:relative;overflow:hidden;aspect-ratio:3/4}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.pcard:hover .pimg img{transform:scale(1.04)}
+.pbadge{position:absolute;top:12px;left:12px;background:var(--gold);color:white;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px}
+.pbadge.sale{background:#C0392B}
+.pactions{position:absolute;bottom:0;left:0;right:0;background:rgba(26,20,16,.85);padding:12px;display:flex;gap:8px;transform:translateY(100%);transition:transform .3s}
+.pcard:hover .pactions{transform:translateY(0)}
+.abtn{flex:1;padding:8px;border:1px solid rgba(255,255,255,.3);background:transparent;color:white;cursor:pointer;font-family:'Jost',sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase}
+.abtn:hover{background:var(--gold);border-color:var(--gold)}
+.abtn.wa{background:#25D366;border-color:#25D366}
+.pinfo{padding:1rem}
+.pname{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--dark);margin-bottom:.25rem}
+.pfabric{font-size:.7rem;color:var(--muted);margin-bottom:.5rem}
+.pprice{display:flex;align-items:center;gap:8px}
+.pcur{font-size:.95rem;font-weight:500;color:var(--dark)}
+.pold{font-size:.8rem;color:var(--muted);text-decoration:line-through}
+.pdisc{font-size:.65rem;background:#FEF3F2;color:#C0392B;padding:2px 6px}
+.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(26,20,16,.7);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.open{display:flex}
+.modal{background:var(--cream);max-width:900px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.mclose{position:absolute;top:1rem;right:1rem;z-index:10;background:var(--dark);color:white;border:none;cursor:pointer;width:32px;height:32px;font-size:1.2rem;display:flex;align-items:center;justify-content:center}
+.mimg{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.mthumbs{display:flex;gap:4px;padding:4px;background:white}
+.mthumb{width:60px;height:80px;object-fit:cover;cursor:pointer;opacity:.6;border:2px solid transparent}
+.mthumb.active,.mthumb:hover{opacity:1;border-color:var(--gold)}
+.mdetails{padding:2rem;display:flex;flex-direction:column;gap:1rem}
+.mtitle{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--dark);line-height:1.1}
+.mprow{display:flex;align-items:center;gap:12px}
+.mprice{font-size:1.4rem;font-weight:500;color:var(--dark)}
+.mcomp{font-size:1rem;color:var(--muted);text-decoration:line-through}
+.msave{font-size:.75rem;background:#FEF3F2;color:#C0392B;padding:3px 8px}
+.mdesc{font-size:.85rem;line-height:1.7;color:var(--muted)}
+.mmeta{display:flex;flex-direction:column;gap:6px}
+.mrow{display:flex;gap:8px;font-size:.8rem}
+.mlbl{color:var(--muted);min-width:60px}
+.mval{color:var(--dark);font-weight:500}
+.mwa{margin-top:auto;background:#25D366;color:white;border:none;cursor:pointer;padding:14px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px}
+.mwa:hover{background:#128C7E}
+.cart-side{position:fixed;right:0;top:0;bottom:0;width:380px;z-index:300;background:var(--cream);border-left:1px solid var(--border);transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.cart-side.open{transform:translateX(0)}
+.cart-hdr{padding:1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.cart-hdr h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--dark)}
+.cart-x{background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--muted)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem}
+.citem{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cimg{width:70px;height:90px;object-fit:cover;flex-shrink:0}
+.cname{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--dark);margin-bottom:4px}
+.cprice{font-size:.85rem;color:var(--muted)}
+.cremove{background:none;border:none;cursor:pointer;color:var(--muted);font-size:.8rem;margin-top:4px;display:block}
+.cart-foot{padding:1.5rem;border-top:1px solid var(--border)}
+.ctotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.ctotal-lbl{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ctotal-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--dark)}
+.cwa-btn{width:100%;background:#25D366;color:white;border:none;cursor:pointer;padding:16px;font-family:'Jost',sans-serif;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:8px}
+.cempty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.cempty p{font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+footer{background:var(--dark);color:rgba(255,255,255,.6);padding:3rem 2rem;text-align:center}
+.flogo{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:#E8D5B0;letter-spacing:.15em;margin-bottom:1rem}
+.wa-float{position:fixed;bottom:2rem;right:2rem;z-index:150;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.4)}
+.wa-float svg{width:28px;height:28px;fill:white}
+.loading{text-align:center;padding:4rem;color:var(--muted);font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+@media(max-width:768px){.hero-img{display:none}.hero-content{max-width:100%}.modal{grid-template-columns:1fr}.cart-side{width:100%}.nav-links{display:none}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="logo">Jamnii <span>Official</span></a>
+  <div class="nav-links">
+    <a href="#col">All</a>
+    <a href="#col" onclick="doFilter('New Arrivals',null)">New Arrivals</a>
+    <a href="#col" onclick="doFilter('Luxury Pret',null)">Luxury Pret</a>
+    <a href="#col" onclick="doFilter('Festive Pret',null)">Festive</a>
+  </div>
+  <button class="cart-btn" onclick="toggleCart()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    Cart <span class="cart-count" id="cc">0</span>
+  </button>
+</nav>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">New Collection 2026</div>
+    <h1>Luxury<br><em>Pakistani</em><br>Wear</h1>
+    <p>Exquisitely crafted traditional ensembles — where heritage meets modern elegance.</p>
+    <div class="btns">
+      <button class="btn-dark" onclick="document.getElementById('col').scrollIntoView({behavior:'smooth'})">Shop Collection</button>
+      <a href="https://wa.me/923008447601" class="btn-out" target="_blank">WhatsApp Us</a>
+    </div>
+    <div class="stats">
+      <div><span class="stat-num">96+</span><span class="stat-lbl">Products</span></div>
+      <div><span class="stat-num">865+</span><span class="stat-lbl">Orders</span></div>
+      <div><span class="stat-num">100%</span><span class="stat-lbl">Premium</span></div>
+    </div>
+  </div>
+  <div class="hero-img">
+    <img src="https://cdn.shopify.com/s/files/1/0814/0174/1610/files/WhatsAppImage2026-04-24at1.20.04AM.jpg?v=1777050507" alt="Jamnii Official"/>
+  </div>
+</section>
+<section id="col" style="padding-top:4rem">
+  <div class="sec-head">
+    <span class="sec-tag">Our Collection</span>
+    <h2 class="sec-title">Crafted with <em>Elegance</em></h2>
+  </div>
+  <div class="filters-wrap">
+    <div class="search-wrap"><input type="text" id="si" placeholder="Search products..." oninput="doSearch(this.value)"/></div>
+    <div class="filters">
+      <button class="fbtn active" onclick="doFilter('all',this)">All</button>
+      <button class="fbtn" onclick="doFilter('New Arrivals',this)">New Arrivals</button>
+      <button class="fbtn" onclick="doFilter('Luxury Pret',this)">Luxury Pret</button>
+      <button class="fbtn" onclick="doFilter('Festive Pret',this)">Festive Pret</button>
+      <button class="fbtn" onclick="doFilter('Stitched',this)">Stitched</button>
+      <button class="fbtn" onclick="doFilter('Sale',this)">On Sale</button>
+    </div>
+  </div>
+  <div class="products-sec">
+    <div class="grid" id="grid"><div class="loading">Loading...</div></div>
+  </div>
+</section>
+<div class="modal-bg" id="mb" onclick="if(event.target===this)closeM()">
+  <div class="modal">
+    <button class="mclose" onclick="closeM()">&#x2715;</button>
+    <div><img class="mimg" id="mimg" src="" alt=""/><div class="mthumbs" id="mthumbs"></div></div>
+    <div class="mdetails">
+      <h2 class="mtitle" id="mtitle"></h2>
+      <div class="mprow"><span class="mprice" id="mprice"></span><span class="mcomp" id="mcomp"></span><span class="msave" id="msave" style="display:none"></span></div>
+      <p class="mdesc" id="mdesc"></p>
+      <div class="mmeta" id="mmeta"></div>
+      <div style="display:flex;gap:8px;margin-top:1rem"><button class="btn-dark" style="flex:1" onclick="addFromM()">Add to Cart</button></div>
+      <button class="mwa" id="mwabtn">&#128;Order on WhatsApp</button>
+    </div>
+  </div>
+</div>
+<div class="cart-side" id="cs">
+  <div class="cart-hdr"><h3>Your Cart</h3><button class="cart-x" onclick="toggleCart()">&#x2715;</button></div>
+  <div class="cart-items" id="ci"><div class="cempty"><p>Your cart is empty</p></div></div>
+  <div class="cart-foot" id="cf" style="display:none">
+    <div class="ctotal"><span class="ctotal-lbl">Total</span><span class="ctotal-price" id="ct">PKR 0</span></div>
+    <button class="cwa-btn" onclick="goCheckout()">Proceed to Checkout</button>
+  </div>
+</div>
+<a href="https://wa.me/923008447601" class="wa-float" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<footer><div class="flogo">Jamnii Official</div><p>Luxury Pakistani Wear &mdash; Crafted with Love</p><p style="margin-top:.5rem;font-size:.7rem">&copy; 2026 Jamnii Official. All rights reserved.</p></footer>
+<script>
+var cart=[];
+var cur=null;
+var WA='923008447601';
+var shown=[];
+
+function init(){
+  if(typeof PRODUCTS==='undefined'){
+    document.getElementById('grid').innerHTML='<div class="loading">Products load ho rahi hain...</div>';
+    setTimeout(init,500);
+    return;
+  }
+  shown=PRODUCTS.slice();
+  render(shown);
+}
+
+function fmt(p){return 'PKR '+Math.round(p).toLocaleString();}
+function pct(p,c){return c&&c>p?Math.round((1-p/c)*100):0;}
+
+function render(list){
+  var g=document.getElementById('grid');
+  if(!list||!list.length){g.innerHTML='<div class="loading">Koi product nahi mila</div>';return;}
+  var h='';
+  for(var i=0;i<list.length;i++){
+    var p=list[i];
+    var d=pct(p.price,p.compare_price);
+    var isNew=p.tags&&p.tags.indexOf('New Arrivals')>=0;
+    var pid=p.id.replace(/'/g,"\\'");
+    h+='<div class="pcard" onclick="openP(\''+pid+'\')">';
+    h+='<div class="pimg">';
+    h+='<img src="'+(p.image||'')+'" alt="'+p.title+'" loading="lazy" onerror="this.src=\'https://placehold.co/300x400/FAF7F2/C9A96E?text=Jamnii\'"/>';
+    if(isNew)h+='<span class="pbadge">New</span>';
+    else if(d>0)h+='<span class="pbadge sale">Sale</span>';
+    h+='<div class="pactions">';
+    h+='<button class="abtn" onclick="event.stopPropagation();addC(\''+pid+'\')">Add to Cart</button>';
+    h+='<button class="abtn wa" onclick="event.stopPropagation();qWA(\''+pid+'\')">WhatsApp</button>';
+    h+='</div></div>';
+    h+='<div class="pinfo">';
+    h+='<div class="pname">'+p.title+'</div>';
+    if(p.fabric)h+='<div class="pfabric">'+p.fabric+'</div>';
+    h+='<div class="pprice"><span class="pcur">'+fmt(p.price)+'</span>';
+    if(p.compare_price>p.price)h+='<span class="pold">'+fmt(p.compare_price)+'</span>';
+    if(d>0)h+='<span class="pdisc">-'+d+'%</span>';
+    h+='</div></div></div>';
+  }
+  g.innerHTML=h;
+}
+
+function openP(id){
+  var p=null;
+  for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].id===id){p=PRODUCTS[i];break;}}
+  if(!p)return;
+  cur=p;
+  document.getElementById('mtitle').textContent=p.title;
+  document.getElementById('mprice').textContent=fmt(p.price);
+  var d=pct(p.price,p.compare_price);
+  if(p.compare_price>p.price){
+    document.getElementById('mcomp').textContent=fmt(p.compare_price);
+    document.getElementById('msave').textContent='Save '+d+'%';
+    document.getElementById('msave').style.display='inline';
+  }else{
+    document.getElementById('mcomp').textContent='';
+    document.getElementById('msave').style.display='none';
+  }
+  document.getElementById('mdesc').textContent=p.description||'';
+  var imgs=p.images&&p.images.length?p.images:[p.image];
+  document.getElementById('mimg').src=imgs[0]||'';
+  var th='';
+  for(var i=0;i<imgs.length;i++)th+='<img class="mthumb'+(i===0?' active':'')+'" src="'+imgs[i]+'" onclick="swImg(this,\''+imgs[i]+'\')">';
+  document.getElementById('mthumbs').innerHTML=th;
+  var meta='';
+  if(p.fabric)meta+='<div class="mrow"><span class="mlbl">Fabric</span><span class="mval">'+p.fabric+'</span></div>';
+  if(p.color)meta+='<div class="mrow"><span class="mlbl">Color</span><span class="mval">'+p.color+'</span></div>';
+  if(p.category)meta+='<div class="mrow"><span class="mlbl">Type</span><span class="mval">'+p.category+'</span></div>';
+  document.getElementById('mmeta').innerHTML=meta;
+  document.getElementById('mwabtn').onclick=function(){qWA(p.id);};
+  document.getElementById('mb').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function swImg(el,src){
+  document.getElementById('mimg').src=src;
+  var ts=document.querySelectorAll('.mthumb');
+  for(var i=0;i<ts.length;i++)ts[i].classList.remove('active');
+  el.classList.add('active');
+}
+
+function closeM(){document.getElementById('mb').classList.remove('open');document.body.style.overflow='';}
+
+function addC(id){
+  var p=null;
+  for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].id===id){p=PRODUCTS[i];break;}}
+  if(!p)return;
+  var found=false;
+  for(var i=0;i<cart.length;i++){if(cart[i].id===id){cart[i].qty++;found=true;break;}}
+  if(!found)cart.push({id:p.id,title:p.title,price:p.price,image:p.image,qty:1});
+  updateCart();
+  document.getElementById('cs').classList.add('open'); localStorage.setItem('jamnii_cart', JSON.stringify(cart));
+}
+
+function addFromM(){if(cur){addC(cur.id);closeM();}}
+
+function remC(id){
+  var nc=[];
+  for(var i=0;i<cart.length;i++){if(cart[i].id!==id)nc.push(cart[i]);}
+  cart=nc;
+  updateCart();
+}
+
+function updateCart(){
+  var count=0;
+  for(var i=0;i<cart.length;i++)count+=cart[i].qty;
+  document.getElementById('cc').textContent=count;
+  var ci=document.getElementById('ci'),cf=document.getElementById('cf');
+  if(!cart.length){ci.innerHTML='<div class="cempty"><p>Your cart is empty</p></div>';cf.style.display='none';return;}
+  cf.style.display='block';
+  var h='';
+  for(var i=0;i<cart.length;i++){
+    var c=cart[i];
+    h+='<div class="citem"><img class="cimg" src="'+(c.image||'')+'" alt="'+c.title+'"/>';
+    h+='<div style="flex:1"><div class="cname">'+c.title+'</div>';
+    h+='<div class="cprice">'+fmt(c.price)+' x'+c.qty+'</div>';
+    h+='<button class="cremove" onclick="remC(\''+c.id+'\')">Remove</button></div></div>';
+  }
+  ci.innerHTML=h;
+  var total=0;
+  for(var i=0;i<cart.length;i++)total+=cart[i].price*cart[i].qty;
+  document.getElementById('ct').textContent=fmt(total);
+}
+
+function toggleCart(){document.getElementById('cs').classList.toggle('open');} function goCheckout(){ localStorage.setItem('jamnii_cart', JSON.stringify(cart)); window.location.href='checkout.html'; }
+
+function qWA(id){
+  var p=null;
+  for(var i=0;i<PRODUCTS.length;i++){if(PRODUCTS[i].id===id){p=PRODUCTS[i];break;}}
+  if(!p)return;
+  var msg=encodeURIComponent('Assalam o Alaikum! Main *'+p.title+'* mein interested hun.\nPrice: '+fmt(p.price)+'\nKya available hai?');
+  window.open('https://wa.me/'+WA+'?text='+msg,'_blank');
+}
+
+function orderWA(){
+  if(!cart.length)return;
+  var msg='Assalam o Alaikum! Main yeh order karna chahti hun:\n\n';
+  var total=0;
+  for(var i=0;i<cart.length;i++){msg+=cart[i].title+' x'+cart[i].qty+' = '+fmt(cart[i].price*cart[i].qty)+'\n';total+=cart[i].price*cart[i].qty;}
+  msg+='\nTotal: '+fmt(total);
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');
+}
+
+function doFilter(tag,btn){
+  if(btn){var bs=document.querySelectorAll('.fbtn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');btn.classList.add('active');}
+  document.getElementById('si').value='';
+  if(tag==='all')shown=PRODUCTS.slice();
+  else if(tag==='Sale')shown=PRODUCTS.filter(function(p){return p.compare_price>p.price;});
+  else shown=PRODUCTS.filter(function(p){return p.tags&&p.tags.indexOf(tag)>=0;});
+  render(shown);
+}
+
+function doSearch(q){
+  var bs=document.querySelectorAll('.fbtn');for(var i=0;i<bs.length;i++)bs[i].classList.remove('active');
+  if(!q){shown=PRODUCTS.slice();render(shown);return;}
+  var ql=q.toLowerCase();
+  shown=PRODUCTS.filter(function(p){
+    return p.title.toLowerCase().indexOf(ql)>=0||(p.description&&p.description.toLowerCase().indexOf(ql)>=0)||(p.fabric&&p.fabric.toLowerCase().indexOf(ql)>=0)||(p.tags&&p.tags.toLowerCase().indexOf(ql)>=0);
+  });
+  render(shown);
+}
+
+window.onload=function(){init();};
+</script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Jamnii Official</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A96E;--dark:#1a1410;--cream:#FAF7F2;--text:#2C2418;--muted:#8B7355;--border:rgba(201,169,110,0.2)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',sans-serif;background:#f5f5f5;color:var(--text)}
+.header{background:var(--cream);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:.15em;color:var(--dark);text-decoration:none}
+.logo span{color:var(--gold)}
+.back-btn{font-size:.75rem;color:var(--muted);text-decoration:none;letter-spacing:.05em;display:flex;align-items:center;gap:4px}
+.back-btn:hover{color:var(--gold)}
+.container{max-width:1100px;margin:0 auto;padding:2rem;display:grid;grid-template-columns:1fr 380px;gap:2rem}
+.left-col{}
+.right-col{}
+.section{background:white;border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;border:1px solid #eee}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--dark);margin-bottom:1.2rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{margin-bottom:12px}
+.form-label{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:block}
+input,select,textarea{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:4px;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--text);outline:none;background:white}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,169,110,0.15)}
+.payment-option{border:1.5px solid #eee;border-radius:6px;padding:1rem;margin-bottom:10px;cursor:pointer;transition:all .2s;display:flex;align-items:flex-start;gap:12px}
+.payment-option:hover{border-color:var(--gold)}
+.payment-option.selected{border-color:var(--gold);background:#fffaf4}
+.payment-option input[type=radio]{margin-top:2px;accent-color:var(--gold);flex-shrink:0;width:16px;height:16px}
+.payment-label{flex:1}
+.payment-name{font-size:.9rem;font-weight:500;color:var(--dark);margin-bottom:3px}
+.payment-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+.payment-icons{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.payment-icon{background:#f0f0f0;padding:3px 8px;border-radius:3px;font-size:.65rem;font-weight:500;color:#444;letter-spacing:.03em}
+.payment-details{margin-top:12px;padding:12px;background:#f9f6f1;border-radius:6px;display:none}
+.payment-details.show{display:block}
+.bank-detail{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:.82rem}
+.bank-detail:last-child{border-bottom:none}
+.bank-key{color:var(--muted)}
+.bank-val{font-weight:500;color:var(--dark)}
+.copy-btn{background:var(--gold);color:white;border:none;padding:3px 8px;border-radius:3px;font-size:.65rem;cursor:pointer;margin-left:8px}
+.wa-details{font-size:.82rem;color:var(--muted);line-height:1.7}
+.order-btn{width:100%;background:var(--dark);color:var(--cream);padding:16px;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;border-radius:4px;margin-top:1rem;transition:background .2s}
+.order-btn:hover{background:var(--gold)}
+.order-btn:disabled{background:#ccc;cursor:not-allowed}
+.order-summary{background:white;border-radius:8px;border:1px solid #eee;overflow:hidden;position:sticky;top:2rem}
+.summary-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);background:var(--cream)}
+.summary-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--dark)}
+.summary-items{padding:1rem 1.5rem;max-height:300px;overflow-y:auto}
+.summary-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.summary-item:last-child{border-bottom:none}
+.item-img{width:60px;height:75px;object-fit:cover;border-radius:4px;flex-shrink:0}
+.item-info{flex:1}
+.item-name{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--dark);margin-bottom:3px}
+.item-price{font-size:.85rem;color:var(--muted)}
+.item-remove{background:none;border:none;color:#ccc;cursor:pointer;font-size:.75rem;margin-top:4px;display:block}
+.item-remove:hover{color:#e74c3c}
+.summary-totals{padding:1rem 1.5rem;border-top:1px solid var(--border)}
+.total-row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);padding:4px 0}
+.total-final{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:500;color:var(--dark);padding:10px 0 0;border-top:1px solid var(--border);margin-top:6px}
+.discount-row{display:flex;gap:8px;margin-bottom:1rem}
+.discount-row input{flex:1}
+.apply-btn{background:var(--dark);color:white;border:none;padding:10px 16px;border-radius:4px;font-family:'Jost',sans-serif;font-size:.78rem;cursor:pointer;white-space:nowrap}
+.apply-btn:hover{background:var(--gold)}
+.free-ship{background:#e8f5e9;color:#2e7d32;font-size:.75rem;padding:8px 12px;border-radius:4px;margin-bottom:1rem;text-align:center}
+.success-overlay{position:fixed;inset:0;background:rgba(26,20,16,.8);z-index:1000;display:none;align-items:center;justify-content:center}
+.success-overlay.show{display:flex}
+.success-box{background:white;border-radius:12px;padding:3rem;text-align:center;max-width:480px;width:90%}
+.success-icon{font-size:4rem;margin-bottom:1rem}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:var(--dark);margin-bottom:.75rem}
+.success-msg{font-size:.9rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.success-btn{background:var(--gold);color:white;border:none;padding:12px 32px;border-radius:4px;font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;letter-spacing:.1em;text-transform:uppercase}
+.required{color:#e74c3c}
+.error{border-color:#e74c3c !important}
+.error-msg{color:#e74c3c;font-size:.75rem;margin-top:4px}
+@media(max-width:768px){.container{grid-template-columns:1fr}.right-col{order:-1}.form-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html" class="back-btn">← Back to Shop</a>
+  <a href="index.html" class="logo">Jamnii <span>Official</span></a>
+  <div style="width:100px"></div>
+</div>
+
+<div class="container">
+  <div class="left-col">
+
+    <!-- Contact -->
+    <div class="section">
+      <div class="section-title">Contact Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name <span class="required">*</span></label>
+          <input type="text" id="firstName" placeholder="Sara" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name <span class="required">*</span></label>
+          <input type="text" id="lastName" placeholder="Ahmed" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number <span class="required">*</span></label>
+        <input type="tel" id="phone" placeholder="03001234567" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email (optional)</label>
+        <input type="email" id="email" placeholder="sara@email.com" />
+      </div>
+    </div>
+
+    <!-- Delivery -->
+    <div class="section">
+      <div class="section-title">Delivery Information</div>
+      <div class="form-group">
+        <label class="form-label">Full Address <span class="required">*</span></label>
+        <input type="text" id="address" placeholder="House no., Street, Area" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">City <span class="required">*</span></label>
+          <input type="text" id="city" placeholder="Lahore" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Province</label>
+          <select id="province">
+            <option>Punjab</option>
+            <option>Sindh</option>
+            <option>KPK</option>
+            <option>Balochistan</option>
+            <option>Islamabad</option>
+            <option>Gilgit-Baltistan</option>
+            <option>AJK</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Order Notes (optional)</label>
+        <input type="text" id="notes" placeholder="Special instructions..." />
+      </div>
+      <div class="free-ship">🚚 Free shipping on all orders across Pakistan</div>
+    </div>
+
+    <!-- Payment -->
+    <div class="section">
+      <div class="section-title">Payment Method</div>
+
+      <!-- WhatsApp -->
+      <div class="payment-option selected" onclick="selectPayment('whatsapp', this)">
+        <input type="radio" name="payment" value="whatsapp" checked />
+        <div class="payment-label">
+          <div class="payment-name">📱 Order via WhatsApp</div>
+          <div class="payment-desc">Place your order directly on WhatsApp. Our team will confirm and arrange payment.</div>
+        </div>
+      </div>
+
+      <!-- PAYFAST -->
+      <div class="payment-option" onclick="selectPayment('payfast', this)">
+        <input type="radio" name="payment" value="payfast" />
+        <div class="payment-label">
+          <div class="payment-name">💳 Online Payment (PAYFAST)</div>
+          <div class="payment-desc">Pay securely via Debit/Credit Card, JazzCash, Easypaisa or Bank Account.</div>
+          <div class="payment-icons">
+            <span class="payment-icon">VISA</span>
+            <span class="payment-icon">MasterCard</span>
+            <span class="payment-icon">JazzCash</span>
+            <span class="payment-icon">Easypaisa</span>
+          </div>
+        </div>
+      </div>
+      <div class="payment-details" id="details-payfast">
+        <div style="font-size:.82rem;color:var(--muted)">You will be redirected to PAYFAST secure payment page to complete your purchase.</div>
+      </div>
+
+      <!-- COD -->
+      <div class="payment-option" onclick="selectPayment('cod', this)">
+        <input type="radio" name="payment" value="cod" />
+        <div class="payment-label">
+          <div class="payment-name">💰 Cash on Delivery (COD)</div>
+          <div class="payment-desc">Pay in cash when your order arrives at your doorstep.</div>
+        </div>
+      </div>
+
+      <!-- Bank Deposit -->
+      <div class="payment-option" onclick="selectPayment('bank', this)">
+        <input type="radio" name="payment" value="bank" />
+        <div class="payment-label">
+          <div class="payment-name">🏦 Bank Deposit</div>
+          <div class="payment-desc">Transfer to our bank account and send screenshot on WhatsApp.</div>
+        </div>
+      </div>
+      <div class="payment-details" id="details-bank">
+        <div class="bank-detail">
+          <span class="bank-key">Account Title</span>
+          <span class="bank-val">JAMNII TEXTILES</span>
+        </div>
+        <div class="bank-detail">
+          <span class="bank-key">Bank</span>
+          <span class="bank-val">Allied Bank (ABL)</span>
+        </div>
+        <div class="bank-detail">
+          <span class="bank-key">Account No.</span>
+          <span class="bank-val">02880010114662310010 <button class="copy-btn" onclick="copyText('02880010114662310010')">Copy</button></span>
+        </div>
+        <div class="bank-detail">
+          <span class="bank-key">IBAN</span>
+          <span class="bank-val">PK31ABPA0010114662310010 <button class="copy-btn" onclick="copyText('PK31ABPA0010114662310010')">Copy</button></span>
+        </div>
+        <div style="margin-top:10px;font-size:.78rem;color:var(--muted)">After transfer, send screenshot to WhatsApp: <strong>+92 300 8447601</strong></div>
+      </div>
+
+      <button class="order-btn" id="placeOrderBtn" onclick="placeOrder()">Place Order</button>
+    </div>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="right-col">
+    <div class="order-summary">
+      <div class="summary-header">
+        <div class="summary-title">Order Summary (<span id="itemCount">0</span> items)</div>
+      </div>
+      <div class="summary-items" id="summaryItems">
+        <div style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No items in cart</div>
+      </div>
+      <div class="summary-totals">
+        <div class="discount-row">
+          <input type="text" id="discountCode" placeholder="Discount code" />
+          <button class="apply-btn" onclick="applyDiscount()">Apply</button>
+        </div>
+        <div class="total-row"><span>Subtotal</span><span id="subtotal">PKR 0</span></div>
+        <div class="total-row"><span>Shipping</span><span style="color:#2e7d32">FREE</span></div>
+        <div class="total-row" id="discountRow" style="display:none;color:#2e7d32"><span>Discount</span><span id="discountAmt"></span></div>
+        <div class="total-final"><span>Total</span><span id="totalAmt">PKR 0</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon" id="successIcon">✅</div>
+    <div class="success-title" id="successTitle">Order Placed!</div>
+    <div class="success-msg" id="successMsg"></div>
+    <button class="success-btn" onclick="goHome()">Continue Shopping</button>
+  </div>
+</div>
+
+<script>
+var WA = '923008447601';
+var PAYFAST_MERCHANT_ID = 'YOUR_MERCHANT_ID'; // APNA MERCHANT ID YAHAN DAALO
+var PAYFAST_SECURED_KEY = 'YOUR_SECURED_KEY'; // APNI SECURED KEY YAHAN DAALO
+var selectedPayment = 'whatsapp';
+var cart = [];
+var discount = 0;
+
+function loadCart(){
+  var stored = localStorage.getItem('jamnii_cart');
+  if(stored){ try{ cart = JSON.parse(stored); }catch(e){ cart = []; } }
+  // If no cart from localStorage, check URL params
+  renderSummary();
+}
+
+function fmt(p){ return 'PKR ' + Math.round(p).toLocaleString(); }
+
+function renderSummary(){
+  var items = document.getElementById('summaryItems');
+  var count = document.getElementById('itemCount');
+  if(!cart.length){
+    items.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem">No items in cart</div>';
+    count.textContent = '0';
+    document.getElementById('subtotal').textContent = 'PKR 0';
+    document.getElementById('totalAmt').textContent = 'PKR 0';
+    return;
+  }
+  var total = 0;
+  var qty = 0;
+  var h = '';
+  for(var i=0;i<cart.length;i++){
+    var c = cart[i];
+    total += c.price * c.qty;
+    qty += c.qty;
+    h += '<div class="summary-item">';
+    h += '<img class="item-img" src="'+(c.image||'')+'" alt="'+c.title+'" onerror="this.src=\'https://placehold.co/60x75/FAF7F2/C9A96E?text=J\'"/>';
+    h += '<div class="item-info">';
+    h += '<div class="item-name">'+c.title+'</div>';
+    if(c.size) h += '<div style="font-size:.75rem;color:var(--muted)">Size: '+c.size+'</div>';
+    h += '<div class="item-price">'+fmt(c.price)+' x'+c.qty+'</div>';
+    h += '<button class="item-remove" onclick="removeItem('+i+')">Remove</button>';
+    h += '</div></div>';
+  }
+  items.innerHTML = h;
+  count.textContent = qty;
+  var finalTotal = total - discount;
+  document.getElementById('subtotal').textContent = fmt(total);
+  document.getElementById('totalAmt').textContent = fmt(finalTotal > 0 ? finalTotal : total);
+}
+
+function removeItem(idx){
+  cart.splice(idx, 1);
+  localStorage.setItem('jamnii_cart', JSON.stringify(cart));
+  renderSummary();
+}
+
+function applyDiscount(){
+  var code = document.getElementById('discountCode').value.trim().toUpperCase();
+  var codes = {'JAMNII10': 10, 'WELCOME15': 15, 'EID20': 20};
+  if(codes[code]){
+    var total = cart.reduce(function(s,c){return s+c.price*c.qty;}, 0);
+    discount = Math.round(total * codes[code] / 100);
+    document.getElementById('discountRow').style.display = 'flex';
+    document.getElementById('discountAmt').textContent = '-' + fmt(discount);
+    renderSummary();
+    alert(codes[code] + '% discount applied!');
+  } else {
+    alert('Invalid discount code');
+  }
+}
+
+function selectPayment(method, el){
+  selectedPayment = method;
+  document.querySelectorAll('.payment-option').forEach(function(o){ o.classList.remove('selected'); });
+  document.querySelectorAll('.payment-details').forEach(function(d){ d.classList.remove('show'); });
+  el.classList.add('selected');
+  el.querySelector('input[type=radio]').checked = true;
+  var det = document.getElementById('details-' + method);
+  if(det) det.classList.add('show');
+  var btn = document.getElementById('placeOrderBtn');
+  if(method === 'whatsapp') btn.textContent = 'Order via WhatsApp';
+  else if(method === 'payfast') btn.textContent = 'Pay Now with PAYFAST';
+  else if(method === 'cod') btn.textContent = 'Place COD Order';
+  else if(method === 'bank') btn.textContent = 'Confirm Bank Transfer Order';
+}
+
+function validate(){
+  var ok = true;
+  var fields = ['firstName','lastName','phone','address','city'];
+  fields.forEach(function(id){
+    var el = document.getElementById(id);
+    if(!el.value.trim()){
+      el.classList.add('error');
+      ok = false;
+    } else {
+      el.classList.remove('error');
+    }
+  });
+  if(!ok) alert('Please fill all required fields');
+  return ok;
+}
+
+function getOrderDetails(){
+  return {
+    name: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+    phone: document.getElementById('phone').value,
+    email: document.getElementById('email').value,
+    address: document.getElementById('address').value + ', ' + document.getElementById('city').value + ', ' + document.getElementById('province').value,
+    notes: document.getElementById('notes').value,
+    payment: selectedPayment,
+    items: cart,
+    total: cart.reduce(function(s,c){return s+c.price*c.qty;},0) - discount
+  };
+}
+
+function placeOrder(){
+  if(!cart.length){ alert('Your cart is empty!'); return; }
+  if(!validate()) return;
+  var order = getOrderDetails();
+
+  if(selectedPayment === 'whatsapp'){
+    var msg = 'Assalam o Alaikum! Main order karna chahti hun:\n\n';
+    order.items.forEach(function(i){ msg += '• '+i.title+(i.size?' (Size: '+i.size+')':'')+' x'+i.qty+' = '+fmt(i.price*i.qty)+'\n'; });
+    msg += '\nTotal: '+fmt(order.total);
+    msg += '\n\nDelivery Details:\nNaam: '+order.name+'\nPhone: '+order.phone+'\nAddress: '+order.address;
+    if(order.notes) msg += '\nNotes: '+order.notes;
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg), '_blank');
+    showSuccess('whatsapp', order.name);
+  }
+  else if(selectedPayment === 'payfast'){
+    payfastCheckout(order);
+  }
+  else if(selectedPayment === 'cod'){
+    sendOrderToWA(order, 'COD');
+    showSuccess('cod', order.name);
+  }
+  else if(selectedPayment === 'bank'){
+    sendOrderToWA(order, 'Bank Transfer');
+    showSuccess('bank', order.name);
+  }
+}
+
+function sendOrderToWA(order, method){
+  var msg = '🛍️ NEW ORDER — '+method+'\n\n';
+  order.items.forEach(function(i){ msg += '• '+i.title+(i.size?' ('+i.size+')':'')+' x'+i.qty+' = '+fmt(i.price*i.qty)+'\n'; });
+  msg += '\nTotal: '+fmt(order.total);
+  msg += '\n\nCustomer:\nNaam: '+order.name+'\nPhone: '+order.phone+'\nAddress: '+order.address;
+  if(order.notes) msg += '\nNotes: '+order.notes;
+  window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg), '_blank');
+}
+
+function payfastCheckout(order){
+  var total = Math.round(order.total);
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://ipg1.apps.net.pk/Ecommerce/api/Transaction/GetAccessToken';
+  var fields = {
+    'MERCHANT_ID': PAYFAST_MERCHANT_ID,
+    'SECURED_KEY': PAYFAST_SECURED_KEY,
+    'BASKET_ID': 'ORDER_' + Date.now(),
+    'TXNAMT': total,
+    'CUSTOMER_MOBILE_NO': order.phone,
+    'CUSTOMER_EMAIL_ADDRESS': order.email || 'customer@jamnii.com',
+    'SIGNATURE': '',
+    'VERSION': 'PAYFAST-V2',
+    'TXNDESC': 'Jamnii Official Order',
+    'SUCCESS_URL': window.location.origin + '/success.html',
+    'FAILURE_URL': window.location.origin + '/checkout.html',
+    'CHECKOUT_URL': window.location.href,
+    'CUSTOMER_NAME': order.name
+  };
+  Object.keys(fields).forEach(function(k){
+    var i = document.createElement('input');
+    i.type = 'hidden'; i.name = k; i.value = fields[k];
+    form.appendChild(i);
+  });
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function showSuccess(method, name){
+  var icon = method === 'whatsapp' ? '📱' : method === 'cod' ? '✅' : '🏦';
+  var title = method === 'whatsapp' ? 'WhatsApp Order!' : 'Order Confirmed!';
+  var msgs = {
+    whatsapp: 'Shukriya '+name.split(' ')[0]+'! Aapka WhatsApp order bhej diya gaya. Hamari team jald confirm karegi.',
+    cod: 'Shukriya '+name.split(' ')[0]+'! Aapka COD order receive ho gaya. Delivery 3-5 working days mein hogi.',
+    bank: 'Shukriya '+name.split(' ')[0]+'! Bank transfer screenshot WhatsApp pe bhejein: +92 300 8447601. Order verify hone ke baad process hoga.',
+    payfast: 'Shukriya '+name.split(' ')[0]+'! Payment successful. Aapka order process ho raha hai.'
+  };
+  document.getElementById('successIcon').textContent = icon;
+  document.getElementById('successTitle').textContent = title;
+  document.getElementById('successMsg').textContent = msgs[method];
+  document.getElementById('successOverlay').classList.add('show');
+  localStorage.removeItem('jamnii_cart');
+}
+
+function goHome(){
+  window.location.href = 'index.html';
+}
+
+function copyText(text){
+  navigator.clipboard.writeText(text).then(function(){ alert('Copied!'); });
+}
+
+loadCart();
+</script>
+</body>
+</html>
